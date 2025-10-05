@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>From Project Management to Scrum Agility — Angeliki Vlastari</title>
+
+    <!-- Favicon / logo -->
+    <link rel="icon" href="AV.svg" type="image/svg+xml"><link rel="alternate icon" href="Photo.png" type="image/png">
+    
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ============ Design tokens ============ */
+    :root{
+      --bg:#ffffff;
+      --surface:#ffffff;
+      --surface-soft:#F6F8FA;
+      --ink:#101418;
+      --ink-2:#4A5562;
+      --line:#E6EAEE;
+      --brand:#148F8B;
+      --brand-tint:#EAF9F9;    /* header tint + callouts */
+      --chip:#DDF4F4;
+      --coral:#FF6F61;
+      --radius:16px;
+      --radius-sm:12px;
+      --shadow:0 8px 24px rgba(16,20,24,.06);
+      --shadow-lg:0 14px 34px rgba(16,20,24,.16);
+      --wrap:1080px;
+      --gradient-surface:linear-gradient(180deg, var(--brand-tint) 0%, #ffffff 32%);
+}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Montserrat,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--ink);line-height:1.7}
+    img{max-width:100%;display:block;height:auto}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    a:focus-visible{outline:3px solid var(--brand);outline-offset:3px;border-radius:8px}
+    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+    .section{padding:48px 0}
+    h1{font-size:clamp(28px,4.5vw,40px);line-height:1.2;margin:.35rem 0 .25rem}
+    h2{font-size:clamp(18px,2.2vw,22px);margin:24px 0 8px}
+    p{margin:10px 0}
+
+    /* Skip link */
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{position:fixed;left:16px;top:16px;width:auto;height:auto;padding:.5rem .75rem;background:#083F3D;color:#fff;border-radius:8px;z-index:1001}
+
+    /* Reading progress */
+    .progress{position:fixed;top:0;left:0;width:100%;height:4px;background:rgba(20,143,139,.12);z-index:1000}
+    .progress .bar{display:block;height:100%;width:0%;background:var(--brand);transition:width .15s linear}
+    @media (prefers-reduced-motion:reduce){.progress .bar{transition:none}}
+
+    /* Header */
+    header.page{padding:56px 0 12px;background:linear-gradient(180deg,var(--brand-tint) 0%,#FFFFFF 70%)}
+    .hdr-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .home-link{display:inline-flex;align-items:center;color:var(--ink-2);font-weight:600;text-decoration:underline}
+    .home-link::before{content:"";display:inline-block;width:16px;height:16px;margin-right:6px;background-image:url('chevron-left.svg');background-repeat:no-repeat;background-position:center;background-size:contain}
+    .meta{font-size:.88rem;color:var(--ink-2)}
+    .subtitle{margin:0 0 16px;color:var(--ink-2)}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 20px}
+    .chip{display:inline-flex;align-items:center;padding:6px 12px;background:var(--chip);border:1px solid var(--line);border-radius:999px;color:#0B4F4F;font-size:.82rem;font-weight:600}
+
+    /* Framed figure */
+    .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+    figure{margin:20px 0}
+    figcaption{font-size:.82rem;color:var(--ink-2);margin-top:8px}
+
+    /* Callout (teal bubble) */
+    .callout{background:var(--brand-tint);border:1px solid #DCEEEE;border-radius:16px;padding:18px 20px;color:var(--ink-2);margin:10px 0}
+
+    /* Case study section */
+    .cs h3{margin:20px 0 6px;font-size:1rem}
+    .cs p{margin:8px 0}
+
+    /* Certifications */
+    .certs{background:#EAF9F9;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 0}
+    .cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .cert{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;min-height:170px;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+    .cert h4{margin:0 0 2px;font-size:.95rem}
+    .cert small{display:block;color:var(--ink-2)}
+    .cert a{display:inline-block;margin-top:auto;font-weight:600}
+    .cert:hover,.cert:focus-within{transform:translateY(-4px);border-color:var(--brand);background:var(--brand-tint)}
+    @media (max-width:900px){.cert-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.cert-grid{grid-template-columns:1fr}}
+
+    /* CTA */
+    .cta-wrap{max-width:var(--wrap);margin:60px auto 110px;padding:0 24px}
+    .cta{display:block;margin-top:12px;padding:24px;border-radius:16px;background:var(--brand);color:#fff;text-align:center;font-weight:700;letter-spacing:.2px;box-shadow:var(--shadow)}
+    .cta:hover{filter:saturate(1.1);text-decoration:none}
+    .cta:focus-visible{outline:3px solid #083F3D;outline-offset:4px}
+
+    /* Footer spacer */
+    .site-footer{height:84px;background:var(--bg)}
+
+    /* Floating Emergency Home Button */
+    .back-home{position:fixed;right:20px;bottom:20px;padding:.85rem 1.15rem;border-radius:9999px;background:var(--coral);color:#fff;border:none;box-shadow:0 10px 24px rgba(255,111,97,.35);font-weight:700;text-decoration:none;opacity:0;transform:translateY(16px);transition:opacity .2s ease,transform .2s ease,filter .2s ease;z-index:999;display:inline-flex;align-items:center;gap:.6rem}
+    .back-home .icon{width:18px;height:18px;display:inline-block;background-image:url('house-fill.svg');background-repeat:no-repeat;background-position:center;background-size:contain}
+    .back-home .label{font-size:.95rem}
+    .back-home.visible{opacity:1;transform:translateY(0)}
+    .back-home:hover{filter:brightness(1.07) saturate(1.05)}
+    @media (max-width:600px){.back-home{padding:0;width:48px;height:48px;display:grid;place-items:center}.back-home .label{display:none}.back-home .icon{width:22px;height:22px}}
+
+    /* Scroll reveal */
+    .reveal{opacity:0;transform:translateY(14px)}
+    .reveal.in{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  
+@media (prefers-reduced-motion: reduce){
+  .progress .bar{ transition: none; }
+}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" role="presentation" aria-hidden="true"><span class="bar" id="progressBar"></span></div>
+
+  <header class="page" role="banner">
+    <div class="wrap">
+      <nav class="hdr-nav" aria-label="Breadcrumb">
+        <a href="Homepage.html" class="home-link" aria-label="Back to homepage">Home</a>
+      </nav>
+      <div class="meta">⏱️ <span>3 min read</span></div>
+      <h1>From Project Management to Scrum Agility</h1>
+      <p class="subtitle">Why the combination of those 2 form a superpower</p>
+      <div class="chips" aria-label="tags">
+        <span class="chip">Project Management</span>
+        <span class="chip">Design Thinking</span>
+        <span class="chip">Agile Mindset</span>
+      </div>
+
+      <!-- (We don’t show a hero gallery here per your Figma – the first figure
+           appears in the body below.) -->
+    </div>
+  </header>
+
+  <main id="main" class="wrap" role="main">
+
+    <section aria-labelledby="s1">
+      <h2 id="s1">Two mindsets, one designer</h2>
+      <p>Traditional project management and Scrum are often seen as opposites. But I see them as complementary mindsets. PM taught me discipline and structure; Scrum taught me adaptability and iteration. Together, they shape how I approach every project:</p>
+      <p>• Always mindful of the big picture.<br/>• Always ready to adapt and improve quickly.</p>
+
+      <h2>From retail to digital design</h2>
+      <p>I began my career in retail design and construction, where project management was crucial. Deadlines were strict, budgets tight, and nothing could slip. Every day mattered. <strong>If a store reopening was delayed, even by one day, it meant lost revenue.</strong></p>
+      <p>This experience gave me a mindset of planning carefully, communicating constantly, and respecting constraints. I worked closely with construction teams, learning how to align schedules, anticipate risks, and keep projects moving without disruption.</p>
+
+      <figure class="card frame" aria-describedby="cap-build">
+        <img src="67311580_2096155423844314_1428078236532736000_n (1).jpg" alt="On-site snapshot: me during a retail build, celebrating progress with paint roller in hand." />
+        <figcaption id="cap-build" class="muted">Working on construction demands good planning and excellent collaboration. Scope, budget and timeline are often all fixed.</figcaption>
+      </figure>
+
+      <div class="callout">
+        Both worlds — project management and agile — have shaped me. The discipline of PM ensures I never lose sight of the big picture. The flexibility of Scrum helps me move quickly and learn continuously. For me, it’s never about choosing one or the other, but applying the right mindset to the right challenge.
+      </div>
+    </section>
+
+    <section class="cs" aria-labelledby="s2">
+      <h2 id="s2">Design Thinking and agile as a mindset</h2>
+      <p>As a UX/UI designer, I’ve worked for years in agile squads and I don’t wait for the perfect scope to start. I collaborate in sprints, apply design thinking, and build MVPs that are tested quickly with users. This accelerates learning and ensures decisions are shaped by data, not assumptions.</p>
+      <p>Agile values — <strong>transparency, feedback, adaptation</strong> — create the best environment for design. They let me:</p>
+      <ul>
+        <li>Validate ideas directly with customers.</li>
+        <li>Iterate designs rapidly.</li>
+        <li>Collaborate seamlessly with developers and product owners.</li>
+        <li>Deliver added value at every sprint—not just at the end of a project.</li>
+      </ul>
+
+      <figure class="card frame" aria-describedby="cap-gantt">
+        <img src="ExcelBlur.png" alt="Blurred excerpt of a Gantt-style planning board mapping sprints across weeks." />
+        <figcaption id="cap-gantt" class="muted">Excel doesn’t scare me! On the contrary, I use it as a weapon for planning and scheduling the most complex tasks.</figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <section class="certs" aria-labelledby="s-certs">
+    <div class="wrap">
+      <h2 id="s-certs">Certifications</h2>
+      <div class="cert-grid">
+        <article class="cert" aria-label="PSPO I">
+          <h4>PSPO I</h4>
+          <small>Scrum.org</small>
+          <a href="#" aria-label="View PSPO I credential">View certificate →</a>
+        </article>
+        <article class="cert" aria-label="Advanced Project Management">
+          <h4>Advanced Project Management</h4>
+          <small>OTE Academy</small>
+          <a href="#" aria-label="View Advanced Project Management credential">View certificate →</a>
+        </article>
+        <article class="cert" aria-label="LeadFirst">
+          <h4>LeadFirst</h4>
+          <small>LevelUp</small>
+          <a href="#" aria-label="View LeadFirst credential">View certificate →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-wrap" role="complementary" aria-label="Next story">
+    <h2 style="margin:0 0 10px 4px">Want to read more stories?</h2>
+    <a class="cta" href="Story_5.html">Accessibility in my heart</a>
+  </div>
+
+  <footer class="site-footer" role="contentinfo"><div class="wrap"></div></footer>
+
+  <!-- floating “home” -->
+  <a href="Homepage.html" class="back-home" id="backHome" aria-label="Go back to homepage" data-future-anchor="#contact">
+    <span class="icon" aria-hidden="true"></span><span class="label">Tired of reading?</span>
+  </a>
+
+  <script>
+    // progress bar
+    (function(){
+      const bar = document.getElementById('progressBar');
+      function update(){
+        const doc = document.documentElement;
+        const scrolled = doc.scrollTop || document.body.scrollTop;
+        const max = (doc.scrollHeight - window.innerHeight) || 1;
+        const pct = Math.min(100, Math.max(0, (scrolled / max) * 100));
+        bar.style.width = pct + '%';
+      }
+      window.addEventListener('scroll', update, {passive:true});
+      window.addEventListener('resize', update); update();
+    })();
+
+    // reveal emergency button after 50%
+    (function(){
+      const back = document.getElementById('backHome');
+      function onScroll(){
+        const halfway = (document.documentElement.scrollHeight - window.innerHeight) / 2;
+        if(window.scrollY > halfway){ back.classList.add('visible'); }
+        else{ back.classList.remove('visible'); }
+      }
+      window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+    })();
+
+    // subtle scroll-reveal
+    (function(){
+      const items = Array.from(document.querySelectorAll('.frame, .cert'));
+      items.forEach(el => el.classList.add('reveal'));
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } })
+      },{threshold:0.14});
+      items.forEach(el=>io.observe(el));
+    })();
+  </script>
+</body>
+</html>

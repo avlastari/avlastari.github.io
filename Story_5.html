@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accessibility at heart — Angeliki Vlastari</title>
+
+    <!-- Favicon / logo -->
+    <link rel="icon" href="AV.svg" type="image/svg+xml"><link rel="alternate icon" href="Photo.png" type="image/png">
+    
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ========= Tokens (Story_base) ========= */
+    :root{
+      --bg:#ffffff; --surface:#ffffff; --surface-soft:#F6F8FA;
+      --ink:#101418; --ink-2:#4A5562; --line:#E6EAEE;
+      --brand:#148F8B; --brand-tint:#EAF9F9; --chip:#DDF4F4;
+      --coral:#FF6F61; --wrap:1080px;
+      --radius:16px; --radius-sm:12px;
+      --shadow:0 8px 24px rgba(16,20,24,.06);
+     --gradient-surface:linear-gradient(180deg, var(--brand-tint) 0%, #ffffff 32%);
+     --shadow-lg:0 24px 60px rgba(16,20,24,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Montserrat,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink);background:var(--bg);line-height:1.7}
+    img{max-width:100%;display:block;height:auto}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    a:focus-visible{outline:3px solid var(--brand);outline-offset:3px;border-radius:8px}
+    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+
+    h1{font-size:clamp(28px,4.4vw,40px);line-height:1.2;margin:.35rem 0 .25rem}
+    h2{font-size:clamp(18px,2.2vw,22px);margin:24px 0 8px}
+
+    /* Skip + Progress */
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{position:fixed;left:16px;top:16px;width:auto;height:auto;padding:.5rem .75rem;background:#083F3D;color:#fff;border-radius:8px;z-index:1001}
+    .progress{position:fixed;top:0;left:0;width:100%;height:4px;background:rgba(20,143,139,.12);z-index:1000}
+    .progress .bar{display:block;height:100%;width:0%;background:var(--brand);transition:width .15s linear}
+
+    /* Header */
+    header.page{padding:56px 0 12px;background:linear-gradient(180deg,var(--brand-tint) 0%,#FFFFFF 70%)}
+    .hdr-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .home-link{display:inline-flex;align-items:center;color:var(--ink-2);font-weight:600;text-decoration:underline}
+    .home-link::before{content:"";display:inline-block;width:16px;height:16px;margin-right:6px;background:url('chevron-left.svg') center/contain no-repeat}
+    .meta{font-size:.88rem;color:var(--ink-2)}
+    .subtitle{color:var(--ink-2);margin:0 0 16px}
+
+    /* Tags */
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 20px}
+    .chip{display:inline-flex;align-items:center;padding:6px 12px;background:var(--chip);border:1px solid var(--line);border-radius:999px;color:#0B4F4F;font-size:.82rem;font-weight:600}
+
+    /* Figure */
+    figure{margin:18px 0}
+    figcaption{font-size:.8rem;color:var(--ink-2);margin-top:8px}
+
+    /* Note */
+    .note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;color:var(--ink-2)}
+
+    /* Certifications */
+    .certs{background:var(--brand-tint);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 0}
+    .cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .cert{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:150px;display:flex;flex-direction:column;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+    .cert h4{margin:0 0 2px;font-size:.95rem}
+    .cert small{display:block;color:var(--ink-2)}
+    .cert a{display:inline-block;margin-top:auto;font-weight:600}
+    .cert:hover,.cert:focus-within{transform:translateY(-4px);border-color:var(--brand);background:var(--brand-tint)}
+    @media (max-width:680px){.cert-grid{grid-template-columns:1fr}}
+
+    /* CTA */
+    .cta-wrap{max-width:var(--wrap);margin:60px auto 110px;padding:0 24px}
+    .cta{display:block;margin-top:12px;padding:24px;border-radius:16px;background:var(--brand);color:#fff;text-align:center;font-weight:700;letter-spacing:.2px;box-shadow:var(--shadow)}
+    .cta:hover{text-decoration:none;filter:saturate(1.06)}
+
+    /* Floating button */
+    .back-home{position:fixed;right:20px;bottom:20px;padding:.85rem 1.15rem;border-radius:9999px;background:var(--coral);color:#fff;border:none;box-shadow:0 10px 24px rgba(255,111,97,.35);font-weight:700;text-decoration:none;opacity:0;transform:translateY(16px);transition:opacity .2s ease,transform .2s ease,filter .2s ease;z-index:999;display:inline-flex;align-items:center;gap:.6rem}
+    .back-home .icon{width:18px;height:18px;background:url('house-fill.svg') center/contain no-repeat}
+    .back-home .label{font-size:.95rem}
+    .back-home.visible{opacity:1;transform:translateY(0)}
+    .back-home:hover{filter:brightness(1.07) saturate(1.05)}
+    @media (max-width:600px){.back-home{padding:0;width:48px;height:48px;display:grid;place-items:center}.back-home .label{display:none}.back-home .icon{width:22px;height:22px}}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(14px)}
+    .reveal.in{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  
+@media (prefers-reduced-motion: reduce){
+  .progress{ position: static; height: 0; }
+  .tag, .cta, .cert{ transition: none; }
+}
+
+</style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span class="bar" id="progressBar"></span></div>
+
+  <header class="page" role="banner">
+    <div class="wrap">
+      <nav class="hdr-nav" aria-label="Breadcrumb">
+        <a href="Homepage.html" class="home-link" aria-label="Back to homepage">Home</a>
+      </nav>
+
+      <div class="meta">⏱️ <span>3 min read</span></div>
+      <h1>Accessibility at heart</h1>
+      <p class="subtitle">Design for Inclusivity and Impact</p>
+
+      <div class="chips" aria-label="tags">
+        <span class="chip">UX Design</span>
+        <span class="chip">Accessibility</span>
+        <span class="chip">Inclusive Design</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="wrap" role="main">
+    <section>
+      <h2>Two mindsets, one designer</h2>
+      <p>This year, my company launched a project to comply with the Digital Accessibility Act and WCAG standards. For me, it was more than a requirement — it was a project very close to my heart.</p>
+      <p>Early on, I realized that accessibility makes a difference not just technically, but ethically and socially. Inclusive design means making sure everyone can access digital products — and that’s the kind of impact I want my work to have.</p>
+    </section>
+
+    <section>
+      <h2>My contributions</h2>
+      <p>As part of this project, I:</p>
+      <ul>
+        <li>Educated myself on WCAG principles and best practices.</li>
+        <li>Worked with my team to revise brand colors on Digital properties for proper contrast.</li>
+        <li>Contributed to alterations in the design system, ensuring accessibility is baked in at the component level, not just in one-off fixes.</li>
+        <li>Helped map and track accessibility violations across our digital ecosystem.</li>
+        <li>Conducted audits and user tests on our website.</li>
+        <li>Even learned basic accessibility-related coding to understand how fixes were implemented.</li>
+      </ul>
+
+      <figure class="reveal">
+        <img src="Wave.JPG" alt="WAVE web accessibility tool view used during audits">
+        <figcaption>Wave has been my companion for the past months (***Here I will post a photo from actually auditing my own website when it is ready. Kind of an Inception***). Check my website to see if it falls in any violations.</figcaption>
+      </figure>
+
+      <div class="note reveal">
+        Accessibility has become one of the most meaningful aspects of my design practice. It reminds me that design is never neutral — it either includes or excludes. My goal is always to design products that invite everyone in.
+      </div>
+    </section>
+
+    <section>
+      <h2>Impact across Products</h2>
+      <p>Over the past year, I’ve contributed to audits and accessible design updates for four different digital products. Each one taught me something new about balancing usability, aesthetics, and accessibility. And it’s not just about client work: this portfolio itself is built with accessibility in mind — simple, structured, and ally-friendly by design.</p>
+
+      <figure class="reveal">
+        <img src="AccessibilityGuidelines.png" alt="Accessibility design guidelines and annotations">
+        <figcaption>In this adaption era, the new Designs that are delivered for any Redesign always include commentary and Guides in order to educate and sensitize accordingly.</figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <section class="certs" aria-labelledby="s-certs">
+    <div class="wrap">
+      <h2 id="s-certs">Certifications</h2>
+      <div class="cert-grid">
+        <article class="cert reveal" aria-label="Web Accessibility Certificate">
+          <h4>Web Accessibility Certificate</h4>
+          <small>Udemy - Chris Worfolk</small>
+          <a href="#">View credential →</a>
+        </article>
+
+        <article class="cert reveal" aria-label="Creating Accessible Websites">
+          <h4>Creating Accessible Websites</h4>
+          <small>Udemy - Stefany Newman</small>
+          <a href="#">View credential →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-wrap" role="complementary" aria-label="Next story">
+    <h2 style="margin:0 0 10px 4px">Want to read more stories?</h2>
+    <a class="cta" href="Story_6.html">Telling stories through wireframes</a>
+  </div>
+
+  <!-- Emergency button -->
+  <a href="Homepage.html#contact" class="back-home" id="backHome" aria-label="Go back to homepage">
+    <span class="icon" aria-hidden="true"></span><span class="label">Tired of reading?</span>
+  </a>
+
+  <script>
+    // Progress bar
+    (function(){
+      const bar=document.getElementById('progressBar');
+      function update(){
+        const d=document.documentElement, s=d.scrollTop||document.body.scrollTop;
+        const m=(d.scrollHeight - innerHeight) || 1;
+        bar.style.width = Math.min(100, Math.max(0,(s/m)*100)) + '%';
+      }
+      addEventListener('scroll',update,{passive:true});
+      addEventListener('resize',update);
+      update();
+    })();
+
+    // Show floating button after half page
+    (function(){
+      const btn=document.getElementById('backHome');
+      function onScroll(){
+        const half=(document.documentElement.scrollHeight - innerHeight)/2;
+        if(scrollY>half) btn.classList.add('visible'); else btn.classList.remove('visible');
+      }
+      addEventListener('scroll',onScroll,{passive:true});
+      onScroll();
+    })();
+
+    // Reveal effects
+    (function(){
+      const els=document.querySelectorAll('.note, .cert, figure');
+      els.forEach(el=>el.classList.add('reveal'));
+      const io=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+      },{threshold:0.14});
+      els.forEach(el=>io.observe(el));
+    })();
+  </script>
+</body>
+</html>

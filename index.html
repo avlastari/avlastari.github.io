@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light">
+  <title>angeliki vlastari — portfolio</title>
+
+  <!-- Favicon / logo -->
+  <link rel="icon" href="AV.svg" type="image/svg+xml"><link rel="alternate icon" href="Photo.png" type="image/png">
+
+
+  <!-- Fonts (perf hints + swap) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== TOKENS (aligned to Story_base) ===== */
+    :root{
+      --brand: #1AA4A4;
+      --brand-2:#12908f;
+      --ink: #101418;
+      --ink-2:#5C6773;
+      --bg: #FFFFFF;
+      --bg-soft: #EAF9F9;             /* soft mint header backdrop */
+      --surface: #F6F8FA;
+      --border: #E6EAEF;
+      --radius-16:16px;
+      --radius-20:20px;
+      --radius-24:24px;
+      --radius-30:30px;
+      --shadow-1: 0 6px 20px rgba(16,20,24,.06);
+      --shadow-2: 0 10px 28px rgba(16,20,24,.10);
+      --card-blue:#DDE0F4;
+      --card-mint:#DDF4F4;
+      --card-rose:#F4DDE2;
+      --card-cream:#F4EDDD;
+      --card-blush:#F4DDDD;
+      --card-lemon:#F4F1DD;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit;text-decoration:none}
+    a:focus-visible, button:focus-visible, summary:focus-visible{
+      outline:2px solid var(--brand);
+      outline-offset:3px;
+      border-radius:10px;
+    }
+
+    /* Skip link */
+    .skip-link{
+      position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+    }
+    .skip-link:focus{
+      position:fixed; left:16px; top:16px; width:auto; height:auto; padding:10px 14px;
+      background:#fff; border:2px solid var(--brand); border-radius:12px; z-index:1000;
+    }
+
+    .shell{ max-width: 1128px; margin:0 auto; padding: 0 16px; }
+
+    /* ===== HEADER ===== */
+    header{
+      background: linear-gradient(180deg, var(--bg-soft) 0%, rgba(234,249,249,0) 70%);
+      padding: 28px 0 16px;
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; gap:24px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; position:relative;
+    }
+    .brand img{ width:56px; height:46px }
+    .brand .name{
+      font-weight:600; font-size:26px; letter-spacing:.2px;
+      display:inline-block;
+    }
+    .links{ display:flex; gap:24px; font-weight:700 }
+    .links a{ position:relative }
+
+    .links a:hover::after{ background:var(--ink) }
+    .links a[aria-current="page"]::after{ background:var(--ink) }
+
+    /* intro card (desktop only) */
+    .intro{
+      display:flex; align-items:center; gap:20px;
+      border:1px solid var(--border);
+      background:#EFF6F6;
+      border-radius:var(--radius-30);
+      padding:18px 22px;
+      margin-top:22px;
+      box-shadow:var(--shadow-1);
+    }
+    .intro .photo{ width:150px; height:150px; border-radius:12px; object-fit:cover }
+    .intro p{ margin:0; line-height:1.6; color:#2a2a2a }
+    .intro b{ color:var(--brand) }
+
+    /* mobile hero (not sticky) */
+    .hero-mobile{ display:none; margin-top:6px }
+    .hero-card{ position:relative; border-radius:20px; overflow:hidden; box-shadow:var(--shadow-1) }
+    .hero-card img{ width:100%; height:220px; object-fit:cover; display:block }
+    .hero-overlay{ background: rgba(239,246,246,.9); padding: 14px 16px 18px; }
+    .hero-title{ font-size:28px; font-weight:700; line-height:1.05 }
+    .hero-sub{ margin-top:6px; font-size:14px; line-height:1.6 }
+
+    /* ===== STORIES GRID ===== */
+    h2.section-title{ margin:40px 0 24px; font-size:22px }
+    .grid{
+      display:grid; gap:16px;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+    }
+    .story{
+      min-height:168px; border:1px solid var(--border);
+      border-radius:var(--radius-16); padding:20px;
+      display:flex; flex-direction:column; justify-content:space-between;
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    @media (prefers-reduced-motion:reduce){
+      .story{ transition:none }
+    }
+    .story:hover{ transform: translateY(-2px); box-shadow: var(--shadow-2) }
+    .story h3{ margin:0; font-size:16px; line-height:1.2 }
+    .story .read{ font-size:14px; text-decoration:underline; color:#6D2C61 }
+
+    /* pastel backgrounds */
+    .s1{ background:var(--card-blue) } .s2{ background:var(--card-mint) }
+    .s3{ background:var(--card-rose) } .s4{ background:var(--card-cream) }
+    .s5{ background:var(--card-mint) } .s6{ background:var(--card-lemon) }
+    .s7{ background:var(--card-blush) } .s8{ background:var(--card-mint) }
+
+    /* ===== TIMELINE ===== */
+    .timeline-wrap{ display:flex; justify-content:flex-start; }
+    .timeline{
+      position:relative;
+      width:100%; max-width:900px;  /* wider desktop as requested */
+      padding: 0 16px 0 280px;       /* room for left dates */
+      margin: 52px 0 8px;
+    }
+    .line{ position:absolute; left: 300px; top:0; bottom:0; width:2px; background:#D7DEE5; }
+
+    /* cleaner cards */
+    details.tl-item{
+      position:relative;
+      background:#fff;
+      border-radius:14px;
+      padding:14px 14px 10px 14px;
+      margin:0 0 18px;
+    }
+    details.tl-item summary{
+      list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    details.tl-item summary::-webkit-details-marker{ display:none }
+    .tl-head{ display:flex; flex-direction:column; gap:3px }
+    .tl-title{ font-weight:700; font-size:18px }
+    .tl-sub{ color:var(--ink-2); font-size:14px }
+    .tl-date{
+      position:absolute; left:0; transform: translateX(-280px);
+      top: 12px; color:var(--ink-2); font-weight:600; font-size:13px; width:260px; text-align:right;
+    }
+    .chev{
+      display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%;
+      background:var(--brand); color:#fff; transition:transform .18s ease; transform: rotate(180deg);
+    }
+    details[open] .chev{ transform: rotate(0deg) }
+    .tl-body{ margin-top:10px; padding-top:10px; border-top:1px dashed #E5E9EE; color:#38434f; line-height:1.65 }
+
+    /* ===== CONTACT ===== */
+    .contact{
+      background: #ddf4f4; color:#000;
+      margin-top:64px; padding: 46px 0 58px;
+    }
+    .contact .shell{ max-width: 920px }
+    .contact h3{ margin:0 0 18px; font-size:22px }
+    .cta-row{ display:flex; gap:12px; flex-wrap:wrap }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; padding:14px 18px;
+      border-radius:16px; border:1px solid rgba(255,255,255,.25);
+      background:#14a09e; color:#fff; text-decoration:underline; font-weight:600;
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    @media (prefers-reduced-motion:reduce){
+      .btn{ transition:none }
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow:var(--shadow-2); background:#12b0ad }
+    .btn svg{ width:16px; height:16px; fill:#fff }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 980px){
+      .grid{ grid-template-columns:repeat(2, minmax(0,1fr)) }
+      .timeline{ padding:0 !important }     /* dates inline */
+      .line{ left:28px }
+      .tl-date{ position:static; transform:none; width:auto; text-align:left; margin: 4px 0 6px }
+      .hero-overlay{ position:static }       /* per your note */
+      .brand img {                           /* per your note */
+        width:115px; height:153px; position:absolute; top:-24px; left:4px; z-index:1;
+      }
+    }
+    @media (max-width: 720px){
+      .brand .name{ display:none }        /* hide “angeliki vlastari” on mobile */
+      .links{ gap:18px }
+      .intro{ display:none }              /* hide desktop intro on mobile */
+      .hero-mobile{ display:block }       /* show mobile hero */
+      .grid{ gap:10px }
+      .story{ min-height:150px; padding:16px }
+      .story h3{ font-size:14px }         /* prevent overflow on small screens */
+    }
+    /* 1) Remove underline in story cards */
+.story .read {
+  text-decoration: none !important;
+}
+
+/* 2) Header logo behavior
+   - Desktop & tablet (>=701px): behave like desktop; no absolute positioning
+   - Small screens (<=700px): use the absolute logo placement you wanted
+*/
+@media (min-width: 701px) {
+  .brand img {
+    position: static !important;
+    width: 56px !important;
+    height: 46px !important;
+    inset: auto !important;
+    z-index: auto !important;
+  }
+  .brand .name {
+    display: inline-block !important; /* show the name on tablet/desktop */
+  }
+}
+
+@media (max-width: 700px) {
+  .brand img {
+    width: 115px !important;
+    height: 153px !important;
+    position: absolute !important;
+    top: 2px !important;
+    left: 4px !important;
+    z-index: 1 !important;
+  }
+  .brand .name {
+    display: none !important; /* hide name on small/mobile */
+  }
+}
+
+/* 3) Chevron robustness on very small screens
+   Prevent stretching by fixing size and stopping flex growth.
+*/
+.chev {
+  flex: 0 0 auto !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 50%;
+  /* if you use a background image version somewhere, avoid scaling: */
+  background-size: 18px 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.chev svg {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+/* Ultra-narrow devices (<320px): shrink chevron slightly and keep the text from colliding */
+@media (max-width: 319px) {
+  .chev {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .chev svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  .tl-summary {
+    gap: 8px !important;
+  }
+  .tl-head {
+    min-width: 0;       /* allow proper wrapping */
+    flex: 1 1 auto;     /* take remaining space, avoid pushing chevron */
+  }
+}
+
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Visually hidden H1 for correct document outline -->
+  <h1 class="skip-link" id="page-title">Angeliki Vlastari — portfolio</h1>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="shell">
+      <nav class="nav" aria-label="Primary">
+        <div class="brand">
+          <img src="AV.svg" alt="AV logo" />
+          <span class="name">angeliki vlastari</span>
+        </div>
+        <div class="links">
+          <a href="#stories" aria-current="page">My stories</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+
+      <!-- Desktop intro card -->
+      <div class="intro" role="region" aria-label="Intro">
+        <img class="photo" src="Photo.png" alt="Portrait of Angeliki Vlastari" width="150" height="150" loading="eager" />
+        <p>
+          I’m a passionate Designer on a journey to infuse human-centered perspectives and Design Thinking into everyday problems.
+          My aim is to specialize in designing solutions for digital products, putting customers at the forefront.
+          My vision: <b>Transform complexity into simplicity, inspire, and be inspired.</b>
+        </p>
+      </div>
+
+      <!-- Mobile hero variant -->
+      <div class="hero-mobile">
+        <div class="hero-card" role="img" aria-label="Portrait of Angeliki Vlastari with intro text">
+          <img src="Photo.png" alt="" />
+          <div class="hero-overlay">
+            <div class="hero-title">angeliki<br/>Vlastari</div>
+            <div class="hero-sub">
+              Passion-driven Designer, engaged in UI/UX, web-design and front-end development.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== STORIES ===== -->
+  <main class="shell" id="main">
+    <h2 class="section-title" id="stories">Get to know me through these project stories</h2>
+
+    <section class="grid" aria-label="Project stories">
+      <a class="story s1" href="Story_1.html" aria-describedby="s1-desc">
+        <h3>Finding What a Customer Wants</h3><span class="read" id="s1-desc">Read Story →</span>
+      </a>
+      <a class="story s2" href="Story_2.html" aria-describedby="s2-desc">
+        <h3>Why Communities Are Awesome</h3><span class="read" id="s2-desc">Read Story →</span>
+      </a>
+      <a class="story s3" href="Story_3.html" aria-describedby="s3-desc">
+        <h3>Shaped by Graphic Design</h3><span class="read" id="s3-desc">Read Story →</span>
+      </a>
+      <a class="story s4" href="Story_4.html" aria-describedby="s4-desc">
+        <h3>From PM to Scrum Agility</h3><span class="read" id="s4-desc">Read Story →</span>
+      </a>
+      <a class="story s2" href="Story_5.html" aria-describedby="s5-desc">
+        <h3>Accessibility at Heart</h3><span class="read" id="s5-desc">Read Story →</span>
+      </a>
+      <a class="story s6" href="Story_6.html" aria-describedby="s6-desc">
+        <h3>Telling Stories Through Wireframes</h3><span class="read" id="s6-desc">Read Story →</span>
+      </a>
+      <a class="story s7" href="Story_7.html" aria-describedby="s7-desc">
+        <h3>Figma is My Friend</h3><span class="read" id="s7-desc">Read Story →</span>
+      </a>
+      <a class="story s2" href="Story_8.html" aria-describedby="s8-desc">
+        <h3>Expressing Through Code &amp; AI</h3><span class="read" id="s8-desc">Read Story →</span>
+      </a>
+    </section>
+
+    <!-- ===== TIMELINE ===== -->
+    <div class="timeline-wrap" role="region" aria-label="Experience timeline">
+      <section class="timeline">
+        <div class="line" aria-hidden="true"></div>
+
+        <!-- 1 -->
+        <details class="tl-item" open aria-labelledby="exp1-title">
+          <summary>
+            <div class="tl-head">
+              <div class="tl-date">Sept 2022 — Now</div>
+              <div class="tl-title" id="exp1-title">30U30 Leadership Program</div>
+              <div class="tl-sub">Deutsche Telekom</div>
+            </div>
+            <span class="chev" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+                <path d="M6 15l6-6 6 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="tl-body">
+            30 under 30 by DT is a career-accelerator program for young Leadership High Potentials with international attention and resources of Telekom Group EU Segment. By the end of this program, I will have participated in 3 six-month assignments (in a total of 18 months) through an individualized development plan, that aims to broaden business knowledge and work on business challenges both locally and internationally.
+          </div>
+        </details>
+
+        <!-- 2 -->
+        <details class="tl-item" aria-labelledby="exp2-title">
+          <summary>
+            <div class="tl-head">
+              <div class="tl-date">Sept 2022 — Now</div>
+              <div class="tl-title" id="exp2-title">Product Design Trainee</div>
+              <div class="tl-sub">Magyar Telekom, Hungary</div>
+            </div>
+            <span class="chev" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+                <path d="M6 15l6-6 6 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="tl-body">
+            Short description / responsibilities / impact…
+          </div>
+        </details>
+
+        <!-- 3 -->
+        <details class="tl-item" aria-labelledby="exp3-title">
+          <summary>
+            <div class="tl-head">
+              <div class="tl-date">Oct 2022 — Mar 2022</div>
+              <div class="tl-title" id="exp3-title">Digital Customer Care</div>
+              <div class="tl-sub">E-value, Greece</div>
+            </div>
+            <span class="chev" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+                <path d="M6 15l6-6 6 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="tl-body">Highlights / contributions…</div>
+        </details>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="contact" aria-label="Contact section" tabindex="-1">
+    <div class="shell">
+      <h3>Contact me :</h3>
+      <div class="cta-row">
+        <a class="btn" href="mailto:youremail@example.com" aria-label="Send me an email">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16a2 2 0 012 2v.4l-10 6-10-6V8a2 2 0 012-2zm-2 5.6l9.3 5.6a3 3 0 003.4 0L24 11.6V16a2 2 0 01-2 2H4a2 2 0 01-2-2v-4.4z"/></svg>
+          Send me an email
+        </a>
+        <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="Find me on LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM8 8h4.8v2.2h.07C13.64 8.9 15.46 8 17.7 8 22.44 8 24 10.9 24 15.44V24h-5v-7.6c0-1.8-.03-4.12-2.5-4.12-2.5 0-2.88 1.95-2.88 4v7.72H8V8z"/></svg>
+          Find me on LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

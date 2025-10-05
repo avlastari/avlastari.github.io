@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shaped by Graphic Design — Angeliki Vlastari</title>
+
+    <!-- Favicon / logo -->
+    <link rel="icon" href="AV.svg" type="image/svg+xml"><link rel="alternate icon" href="Photo.png" type="image/png">
+    
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta name="description" content="How freedom of expression can also live inside boundaries." />
+  <style>
+    :root{
+      --bg:#ffffff; --surface:#ffffff; --surface-soft:#F6F8FA;
+      --ink:#101418; --ink-2:#4A5562; --line:#E6EAEE;
+      --brand:#148F8B; --brand-tint:#EAF9F9; --chip:#DDF4F4;
+      --coral:#FF6F61; --radius:16px; --radius-sm:12px;
+      --shadow:0 8px 24px rgba(16,20,24,.06); --wrap:1080px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family:Montserrat,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#fff; color:var(--ink); line-height:1.7}
+    img{max-width:100%; display:block; height:auto}
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    a:focus-visible{outline:3px solid var(--brand); outline-offset:3px; border-radius:8px}
+    .wrap{max-width:var(--wrap); margin:0 auto; padding:0 24px}
+    h1{font-size:clamp(28px,4.5vw,40px); line-height:1.2; margin:.35rem 0 .25rem}
+    h2{font-size:clamp(18px,2.2vw,22px); margin:24px 0 8px}
+    p{margin:10px 0}
+
+    /* Skip + progress */
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{position:fixed;left:16px;top:16px;width:auto;height:auto;padding:.5rem .75rem;background:#083F3D;color:#fff;border-radius:8px;z-index:1001}
+    .progress{position:fixed;top:0;left:0;width:100%;height:4px;background:rgba(20,143,139,.12);z-index:1000}
+    .progress .bar{display:block;height:100%;width:0%;background:var(--brand);transition:width .15s linear}
+    @media (prefers-reduced-motion: reduce){.progress .bar{transition:none}}
+
+    /* Header gradient */
+    header.page{padding:56px 0 12px; background:linear-gradient(180deg, var(--brand-tint) 0%, #FFFFFF 70%)}
+    .hdr-nav{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px}
+    .home-link{display:inline-flex; align-items:center; color:var(--ink-2); font-weight:600; text-decoration:underline}
+    .home-link::before{content:""; width:16px; height:16px; margin-right:6px; background:url('chevron-left.svg') center/contain no-repeat}
+    .meta{font-size:.88rem; color:var(--ink-2)}
+    .subtitle{margin:0 0 16px; color:var(--ink-2)}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 20px}
+    .chip{display:inline-flex; align-items:center; padding:6px 12px; background:var(--chip); border:1px solid var(--line); border-radius:999px; color:#0B4F4F; font-size:.82rem; font-weight:600}
+
+    /* Media: rounded, some cropped */
+    .media{border-radius:16px; overflow:hidden}
+    .media img{width:100%; height:100%; object-fit:cover; object-position:center}
+    .hero-media{aspect-ratio: 5 / 3}            /* hero crop like Figma */
+    .square{aspect-ratio: 1 / 1}                /* square tiles */
+    .wide{aspect-ratio: 18 / 9}                 /* promo banners */
+    figure{margin:20px 0}
+    figcaption{font-size:.82rem; color:var(--ink-2); margin-top:8px}
+
+    /* Grids that match the screenshot */
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+    @media (max-width:860px){ .grid-2{grid-template-columns:1fr; } }
+
+    /* Note block */
+    .note{background:#EAF9F9; border:1px solid var(--line); border-radius:16px; padding:16px; color:var(--ink-2)}
+
+    /* CTA */
+    .cta-wrap{max-width:var(--wrap); margin:60px auto 110px; padding:0 24px}
+    .cta{display:block; margin-top:12px; padding:24px; border-radius:16px; background:var(--brand); color:#fff; text-align:center; font-weight:700; letter-spacing:.2px; box-shadow:var(--shadow)}
+    .cta:hover{filter:saturate(1.1); text-decoration:none}
+    .site-footer{height:84px; background:#fff}
+
+    /* Emergency coral button */
+    .back-home{position:fixed; right:20px; bottom:20px; padding:.85rem 1.15rem; border-radius:9999px; background:var(--coral); color:#fff; border:none; box-shadow:0 10px 24px rgba(255,111,97,.35); font-weight:700; text-decoration:none; opacity:0; transform:translateY(16px); transition:opacity .2s, transform .2s, filter .2s; z-index:999; display:inline-flex; align-items:center; gap:.6rem}
+    .back-home .icon{width:18px; height:18px; background:url('house-fill.svg') center/contain no-repeat}
+    .back-home .label{font-size:.95rem}
+    .back-home.visible{opacity:1; transform:translateY(0)}
+    .back-home:hover{filter:brightness(1.07) saturate(1.05)}
+    @media (max-width:600px){ .back-home{padding:0; width:48px; height:48px; display:grid; place-items:center} .back-home .label{display:none} .back-home .icon{width:22px; height:22px} }
+
+    /* Reveal */
+    .reveal{opacity:0; transform:translateY(14px)}
+    .reveal.in{opacity:1; transform:none; transition:opacity .55s ease, transform .55s ease}
+    @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" role="presentation" aria-hidden="true"><span class="bar" id="progressBar"></span></div>
+
+  <header class="page" role="banner">
+    <div class="wrap">
+      <nav class="hdr-nav" aria-label="Breadcrumb">
+        <a href="Homepage.html" class="home-link" aria-label="Back to homepage">Home</a>
+      </nav>
+      <div class="meta">⏱️ <span>3 min read</span></div>
+      <h1>Shaped by Graphic Design</h1>
+      <p class="subtitle">How freedom of expression can also live inside boundaries</p>
+      <div class="chips" aria-label="tags">
+        <span class="chip">UI Design</span>
+        <span class="chip">Inspiration</span>
+        <span class="chip">Creativity</span>
+      </div>
+
+      <!-- HERO (no white frame, cropped) -->
+      <figure aria-describedby="cap-hero">
+        <div class="media hero-media">
+          <img src="ManDan.jpg" alt="Design of brand logo and business card on a wooden table." />
+        </div>
+        <figcaption id="cap-hero" class="muted">Design of Brand Logo and identity for an independent Ceramic Artist</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <main id="main" class="wrap" role="main">
+    <section>
+      <h2>Express creativity</h2>
+      <p>A designer is, above all, a creator. That mindset has followed me everywhere. I fell in love with typography and graphics early on — and I never stopped experimenting.</p>
+      <p>Over time, I’ve explored a diverse range of visual design topics — from creating logos and stickers to designing merch applications, store wallpapers, and digital banners. Every project, whether playful or professional, has been a chance to see how visuals shape identity and bring ideas to life.</p>
+
+      <!-- Two square tiles -->
+      <figure aria-describedby="cap-squares">
+        <div class="grid-2">
+          <div class="media square reveal">
+            <img src="InstaDreadhog.png" alt="DREADHOG poster with neon gradients and a playful wave." />
+          </div>
+          <div class="media square reveal">
+            <img src="GermanosNostalgia.png" alt="Abstract vector illustration inspired by retro devices with diagonal streaks." />
+          </div>
+        </div>
+        <figcaption id="cap-squares" class="muted">Playful posts and posters for digital use that caught the attention</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>Who said I can’t also follow Guidelines?</h2>
+      <p>Graphic design isn’t just about free exploration — it’s also about clarity and discipline. I’ve worked on digital product assets and marketing banners where following strict brand guidelines was essential.</p>
+      <p>Balancing creativity with consistency taught me that good design isn’t just expressive — it’s structured, intentional, and built to communicate clearly.</p>
+
+      <!-- Two wide banners next to each other -->
+      <figure aria-describedby="cap-banners">
+        <div class="grid-2">
+          <div class="media wide reveal">
+            <img src="FoodBanner (1).png" alt="Pizza combo promotional banner designed under guidelines." />
+          </div>
+          <div class="media wide reveal">
+            <img src="FoodBanner (2).png" alt="Burger and fries discount banner designed under guidelines." />
+          </div>
+        </div>
+        <figcaption id="cap-banners" class="muted">It is not always easy to Design inside Guidelines — Especially if it is lunch time and you are hungry</figcaption>
+      </figure>
+
+      <div class="note reveal">
+        If you haven’t noticed yet — I’m a team person. Work is more satisfying when you are having a little fun. That’s why I love creating team merch and logos that bring humor and personality into our projects and Team’s identity.
+      </div>
+
+      <!-- Team merch two-up -->
+      <figure aria-describedby="cap-merch">
+        <div class="grid-2">
+          <div class="media square reveal">
+            <img src="xsiters.png" alt="Illustrated team sticker with dashed path — X-siters." />
+          </div>
+          <div class="media square reveal">
+            <img src="Backlog.JPG" alt="Sticker in Greek reading 'Βάλ’ το στο Backlog' with sparkles." />
+          </div>
+        </div>
+        <figcaption id="cap-merch" class="muted">My Team’s merch boosts our spirit and brings a bit of joy to our everyday ppt presentations. 😊</figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <div class="cta-wrap" role="complementary" aria-label="Next story">
+    <h2 style="margin:0 0 10px 4px">Want to read more stories?</h2>
+    <a class="cta" href="story-04.html">From PM to Scrum Agility</a>
+  </div>
+
+  <footer class="site-footer" role="contentinfo"><div class="wrap"></div></footer>
+
+  <!-- Coral emergency button -->
+  <a href="Homepage.html" class="back-home" id="backHome" aria-label="Go back to homepage">
+    <span class="icon" aria-hidden="true"></span><span class="label">Tired of reading?</span>
+  </a>
+
+  <script>
+    // Progress bar
+    (function(){
+      const bar = document.getElementById('progressBar');
+      function update(){
+        const doc = document.documentElement;
+        const scrolled = doc.scrollTop || document.body.scrollTop;
+        const max = (doc.scrollHeight - window.innerHeight) || 1;
+        const pct = Math.min(100, Math.max(0, (scrolled / max) * 100));
+        if(bar) bar.style.width = pct + '%';
+      }
+      window.addEventListener('scroll', update, {passive:true});
+      window.addEventListener('resize', update); update();
+    })();
+
+    // Reveal emergency button after 50%
+    (function(){
+      const back = document.getElementById('backHome');
+      function onScroll(){
+        const halfway = (document.documentElement.scrollHeight - window.innerHeight) / 2;
+        if(window.scrollY > halfway){ back.classList.add('visible'); } else { back.classList.remove('visible'); }
+      }
+      window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+    })();
+
+    // Scroll reveal
+    (function(){
+      const items = Array.from(document.querySelectorAll('.reveal'));
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+      },{threshold:0.14});
+      items.forEach(el=>io.observe(el));
+    })();
+  </script>
+</body>
+</html>

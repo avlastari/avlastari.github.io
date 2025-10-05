@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Telling Stories through Wireframes — Angeliki Vlastari</title>
+
+    <!-- Favicon / logo -->
+    <link rel="icon" href="AV.svg" type="image/svg+xml"><link rel="alternate icon" href="Photo.png" type="image/png">
+    
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta name="description" content="Wireframes that tell a story — a playful case study that explores chat as search, social elements, and delight." />
+  <style>
+    :root{
+      --bg:#ffffff;--surface:#ffffff;--surface-soft:#F6F8FA;--ink:#101418;--ink-2:#4A5562;
+      --line:#E6EAEE;--brand:#148F8B;--brand-tint:#EAF9F9;--chip:#DDF4F4;--coral:#FF6F61;
+      --radius:16px;--radius-sm:12px;--shadow:0 8px 24px rgba(16,20,24,.06);--shadow-lg:0 14px 34px rgba(16,20,24,.16);
+      --wrap:1080px;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:Montserrat,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--ink);line-height:1.7}
+    img{max-width:100%;height:auto;display:block}
+    a{color:var(--brand);text-decoration:none} a:hover{text-decoration:underline}
+    a:focus-visible{outline:3px solid var(--brand);outline-offset:3px;border-radius:8px}
+    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+    h1{font-size:clamp(28px,4.5vw,40px);line-height:1.2;margin:.35rem 0 .25rem}
+    h2{font-size:clamp(18px,2.2vw,22px);margin:24px 0 8px} p{margin:10px 0}
+    header.page{padding:56px 0 12px;background:linear-gradient(180deg,var(--brand-tint) 0%,#fff 70%)}
+    .hdr-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .home-link{display:inline-flex;align-items:center;color:var(--ink-2);font-weight:600;text-decoration:underline}
+    .home-link::before{content:"";display:inline-block;width:16px;height:16px;margin-right:6px;background:url('chevron-left.svg') center/contain no-repeat}
+    .meta{font-size:.88rem;color:var(--ink-2)}
+    .subtitle{margin:0 0 16px;color:var(--ink-2)}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 20px}
+    .chip{display:inline-flex;align-items:center;padding:6px 12px;background:var(--chip);border:1px solid var(--line);border-radius:999px;color:#0B4F4F;font-size:.82rem;font-weight:600}
+    .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+    figure{margin:20px 0} figcaption{font-size:.82rem;color:var(--ink-2);margin-top:8px}
+
+    main{padding: 12px 0 100px}
+    .two-up{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:860px){.two-up{grid-template-columns:1fr}}
+
+    .note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;color:var(--ink-2)}
+    .certs{background:#EAF9F9;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 0}
+    .cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .cert{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;min-height:170px;transition:transform .2s ease, background .2s ease, border-color .2s ease}
+    .cert h4{margin:0 0 2px;font-size:.95rem} .cert small{display:block;color:var(--ink-2)} .cert a{display:inline-block;margin-top:auto;font-weight:600}
+    .cert:hover,.cert:focus-within{transform:translateY(-4px);border-color:var(--brand);background:var(--brand-tint)}
+    @media(max-width:900px){.cert-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.cert-grid{grid-template-columns:1fr}}
+
+    .cta-wrap{max-width:var(--wrap);margin:60px auto 110px;padding:0 24px}
+    .cta{display:block;margin-top:12px;padding:24px;border-radius:16px;background:var(--brand);color:#fff;text-align:center;font-weight:700;letter-spacing:.2px;box-shadow:var(--shadow)}
+    .cta:hover{text-decoration:none;filter:saturate(1.1)}
+    .site-footer{height:84px;background:var(--bg)}
+
+    .progress{position:fixed;top:0;left:0;width:100%;height:4px;background:rgba(20,143,139,.12);z-index:1000}
+    .progress .bar{display:block;height:100%;width:0%;background:var(--brand);transition:width .15s linear}
+    @media (prefers-reduced-motion: reduce){.progress .bar{transition:none}}
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{position:fixed;left:16px;top:16px;width:auto;height:auto;padding:.5rem .75rem;background:#083F3D;color:#fff;border-radius:8px;z-index:1001}
+
+    .reveal{opacity:0;transform:translateY(14px)}
+    .reveal.in{opacity:1;transform:none;transition:opacity .55s ease, transform .55s ease}
+
+    .back-home{position:fixed;right:20px;bottom:20px;padding:.85rem 1.15rem;border-radius:9999px;background:var(--coral);color:#fff;border:none;box-shadow:0 10px 24px rgba(255,111,97,.35);font-weight:700;text-decoration:none;opacity:0;transform:translateY(16px);transition:opacity .2s ease, transform .2s ease, filter .2s ease;z-index:999;display:inline-flex;align-items:center;gap:.6rem}
+    .back-home .icon{width:18px;height:18px;background:url('house-fill.svg') center/contain no-repeat;display:inline-block}
+    .back-home.visible{opacity:1;transform:translateY(0)}
+    .back-home:hover{filter:brightness(1.07) saturate(1.05)}
+    @media(max-width:600px){.back-home{padding:0;width:48px;height:48px;display:grid;place-items:center}.back-home .label{display:none}.back-home .icon{width:22px;height:22px}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" role="presentation" aria-hidden="true"><span class="bar" id="progressBar"></span></div>
+
+  <header class="page" role="banner">
+    <div class="wrap">
+      <nav class="hdr-nav" aria-label="Breadcrumb">
+        <a href="Homepage.html" class="home-link" aria-label="Back to homepage">Home</a>
+      </nav>
+      <div class="meta">⏱️ <span>3 min read</span></div>
+      <h1>Telling Stories through Wireframes</h1>
+      <p class="subtitle">that are telling a story</p>
+      <div class="chips" aria-label="tags">
+        <span class="chip">UX Design</span>
+        <span class="chip">Wireframes</span>
+        <span class="chip">Concept Design</span>
+      </div>
+
+      <figure class="card" aria-describedby="cap-hero">
+        <img src="0_core.png" alt="Concept diagram showing Chat, Share and Personalize connected — Beyond Chatbot" />
+        <figcaption id="cap-hero" class="muted">Help me with caption — maybe the picture would be an animation</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <main id="main" class="wrap" role="main">
+    <section>
+      <h2>Everybody wants to see wireframes in a designer’s portfolio.</h2>
+      <p>But here’s the truth: in real life, nobody gets excited about a sketchy, grayscale draft — and I totally get it. It’s often hard for non‑designers to connect with those screens or imagine the final intent behind them. That’s why I always try to add context, visuals, and storytelling even at the wireframing stage.</p>
+      <p>Sure, creativity starts on paper — but why not make our wireframes more visually appealing and more human?</p>
+    </section>
+
+    <section>
+      <h2>Case Study: inspiration from a voice message</h2>
+      <p>Back in 2023, when I was working in the chatbot chapter, I had the chance to <strong>experiment with a concept design</strong> that went a step beyond everyday work. The idea was to create a new chatbot for our youth prepaid product — one of the most popular services among students — often acting as the “front door” to our core products.</p>
+      <p>We wanted something bold yet playful, a chatbot experience that matched the energy of its audience. That insight changed our direction: the chatbot could double as a search bar, indexing products and results while maintaining a conversational tone.</p>
+
+      <h3>Testing the hypothesis</h3>
+      <p>We quickly created a beta version and tested it with a small group of users. We observed that they weren’t “chatting” — they wanted quick, functional answers. That insight confirmed our direction.</p>
+
+      <h3>Pushing the idea further</h3>
+      <p>What if the chatbot could serve as a search tool, yet become a social conversational app? We explored: enabling gifting and playful interactions, adding customization and gamification, and giving friends a reason to return.</p>
+
+      <div class="two-up">
+        <figure class="card" aria-label="Welcome flow">
+          <img src="3_WelcomeBot-Recovered.png" alt="Welcome flow with avatar tips and guidance" />
+        </figure>
+        <figure class="card" aria-label="Conversation scenarios">
+          <img src="5_Conversation OvN.png" alt="Conversation scenarios showcasing audio input, recommendations and quick replies" />
+        </figure>
+      </div>
+
+      <figure class="card" aria-label="Interaction scenarios">
+        <img src="6_Interaction.png" alt="Comparing SMS with in‑app conversational experience and friend interactions" />
+      </figure>
+
+      <div class="note">For me, this project proved that wireframes are not just boxes and lines — they can be a <em>story</em> people can actually feel.</div>
+    </section>
+  </main>
+
+  <section class="certs" aria-labelledby="s-certs">
+    <div class="wrap">
+      <h2 id="s-certs">Certifications</h2>
+      <div class="cert-grid">
+        <article class="cert" aria-label="Google UX Design Certificate">
+          <h4>Google UX Design Certificate 1–5</h4>
+          <small>Coursera</small>
+          <a href="#">View certificate →</a>
+        </article>
+        <article class="cert" aria-label="Complete Web & Mobile Designer">
+          <h4>Complete Web & Mobile Designer</h4>
+          <small>ZTM</small>
+          <a href="#">View certificate →</a>
+        </article>
+        <article class="cert" aria-label="UX Wireframes">
+          <h4>UX Wireframes</h4>
+          <small>IDx</small>
+          <a href="#">View certificate →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-wrap" role="complementary" aria-label="Next story">
+    <h2 style="margin:0 0 10px 4px">Want to read more stories?</h2>
+    <a class="cta" href="Story_7.html">Figma is my friend</a>
+  </div>
+
+  <footer class="site-footer" role="contentinfo"><div class="wrap"></div></footer>
+
+  <a href="Homepage.html" class="back-home" id="backHome" aria-label="Go back to homepage">
+    <span class="icon" aria-hidden="true"></span><span class="label">Tired of reading?</span>
+  </a>
+
+  <script>
+    (function(){const b=document.getElementById('progressBar');function u(){const d=document.documentElement;const s=d.scrollTop||document.body.scrollTop;const m=(d.scrollHeight-window.innerHeight)||1;b.style.width=Math.min(100,Math.max(0,(s/m)*100))+'%'}window.addEventListener('scroll',u,{passive:true});window.addEventListener('resize',u);u();})();
+    (function(){const back=document.getElementById('backHome');function on(){const h=(document.documentElement.scrollHeight-window.innerHeight)/2; if(window.scrollY>h){back.classList.add('visible')}else{back.classList.remove('visible')}}window.addEventListener('scroll',on,{passive:true});on();})();
+    (function(){const items=[...document.querySelectorAll('.card, .cert, .note')];items.forEach(el=>el.classList.add('reveal'));const io=new IntersectionObserver((en)=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.14});items.forEach(el=>io.observe(el));})(); 
+  </script>
+</body>
+</html>

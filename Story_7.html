@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Figma is my friend — Angeliki Vlastari</title>
+
+    <!-- Favicon / logo -->
+    <link rel="icon" href="AV.svg" type="image/svg+xml"><link rel="alternate icon" href="Photo.png" type="image/png">
+    
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== Design Tokens (from Story_base) ===== */
+    :root{
+      --bg:#ffffff; --surface:#ffffff; --surface-soft:#F6F8FA;
+      --ink:#101418; --ink-2:#4A5562; --line:#E6EAEE;
+      --brand:#148F8B; --brand-tint:#EAF9F9; --chip:#DDF4F4;
+      --coral:#FF6F61; --radius:16px; --radius-sm:12px;
+      --shadow:0 8px 24px rgba(16,20,24,.06); --shadow-lg:0 14px 34px rgba(16,20,24,.16);
+      --wrap:1080px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:Montserrat, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--bg); color:var(--ink); line-height:1.7}
+    img{max-width:100%; display:block; height:auto}
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    a:focus-visible{outline:3px solid var(--brand); outline-offset:3px; border-radius:8px}
+    .wrap{max-width:var(--wrap); margin:0 auto; padding:0 24px}
+    h1{font-size:clamp(28px, 4.5vw, 40px); line-height:1.2; margin:.35rem 0 .25rem}
+    h2{font-size:clamp(18px,2.2vw,22px); margin:24px 0 8px}
+
+    /* Skip & progress */
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{position:fixed;left:16px;top:16px;width:auto;height:auto;padding:.5rem .75rem;background:#083F3D;color:#fff;border-radius:8px;z-index:1001}
+    .progress{position:fixed;top:0;left:0;width:100%;height:4px;background:rgba(20,143,139,.12);z-index:1000}
+    .progress .bar{display:block;height:100%;width:0%;background:var(--brand);transition:width .15s linear}
+
+    /* Header gradient + breadcrumb + chips */
+    header.page{padding:56px 0 12px; background:linear-gradient(180deg, var(--brand-tint) 0%, #FFFFFF 70%)}
+    .hdr-nav{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px}
+    .home-link{display:inline-flex; align-items:center; color:var(--ink-2); font-weight:600; text-decoration:underline}
+    .home-link::before{content:""; display:inline-block; width:16px; height:16px; margin-right:6px; background-image:url('chevron-left.svg'); background-repeat:no-repeat; background-position:center; background-size:contain}
+    .meta{font-size:.88rem; color:var(--ink-2)}
+    .subtitle{margin:0 0 16px; color:var(--ink-2)}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 20px}
+    .chip{display:inline-flex; align-items:center; padding:6px 12px; background:var(--chip); border:1px solid var(--line); border-radius:999px; color:#0B4F4F; font-size:.82rem; font-weight:600}
+
+    /* Figure card */
+    .card{background:#fff; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px}
+    figure{margin:20px 0}
+    figcaption{font-size:.82rem; color:var(--ink-2); margin-top:8px}
+
+    /* Note */
+    .note{background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; color:var(--ink-2)}
+
+    /* Certifications (Story_base style) */
+    .certs{background:#EAF9F9; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:36px 0}
+    .cert-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .cert{background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; min-height:170px; transition:transform .2s ease, background .2s ease, border-color .2s ease}
+    .cert h4{margin:0 0 2px; font-size:.95rem}
+    .cert small{display:block; color:var(--ink-2)}
+    .cert a{display:inline-block; margin-top:auto; font-weight:600}
+    .cert:hover, .cert:focus-within{transform:translateY(-4px); border-color:var(--brand); background:var(--brand-tint)}
+    @media (max-width:900px){ .cert-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:560px){ .cert-grid{grid-template-columns:1fr} }
+
+    /* CTA */
+    .cta-wrap{max-width:var(--wrap); margin:60px auto 110px; padding:0 24px}
+    .cta{display:block; margin-top:12px; padding:24px; border-radius:16px; background:var(--brand); color:#fff; text-align:center; font-weight:700; letter-spacing:.2px; box-shadow:var(--shadow)}
+    .cta:hover{filter:saturate(1.1); text-decoration:none}
+    .site-footer{height:84px; background:var(--bg)}
+
+    /* Emergency home */
+    .back-home{position:fixed; right:20px; bottom:20px; padding:.85rem 1.15rem; border-radius:9999px; background:var(--coral); color:#fff; border:none; box-shadow:0 10px 24px rgba(255,111,97,.35); font-weight:700; text-decoration:none; opacity:0; transform:translateY(16px); transition:opacity .2s ease, transform .2s ease, filter .2s ease; z-index:999; display:inline-flex; align-items:center; gap:.6rem}
+    .back-home .icon{width:18px; height:18px; display:inline-block; background-image:url('house-fill.svg'); background-repeat:no-repeat; background-position:center; background-size:contain}
+    .back-home .label{font-size:.95rem}
+    .back-home.visible{opacity:1; transform:translateY(0)}
+    .back-home:hover{filter:brightness(1.07) saturate(1.05)}
+    @media (max-width:600px){ .back-home{padding:0; width:48px; height:48px; display:grid; place-items:center} .back-home .label{display:none} .back-home .icon{width:22px; height:22px} }
+
+    /* Reveal */
+    .reveal{opacity:0; transform:translateY(14px)}
+    .reveal.in{opacity:1; transform:none; transition:opacity .55s ease, transform .55s ease}
+    @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span class="bar" id="progressBar"></span></div>
+
+  <header class="page" role="banner">
+    <div class="wrap">
+      <nav class="hdr-nav" aria-label="Breadcrumb">
+        <a href="Homepage.html" class="home-link" aria-label="Back to homepage">Home</a>
+      </nav>
+
+      <div class="meta">⏱️ <span>4 min read</span></div>
+      <h1>Figma is my friend</h1>
+      <p class="subtitle">Geeking out on Figma</p>
+
+      <div class="chips" aria-label="tags">
+        <span class="chip">UI Design</span>
+        <span class="chip">Wireframes</span>
+        <span class="chip">UX Design</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="wrap" role="main">
+    <section>
+      <h2>Figma is my playground and my workshop</h2>
+      <p>From building “boring” UI components from scratch, to setting up variables with properties and variant swaps, I enjoy creating the fundamental building blocks of design systems.</p>
+      <p>But I don’t stop there — I also love experimenting with advanced techniques and motion, using Figma to explore how interfaces feel, not just how they look.</p>
+    </section>
+
+    <section>
+      <h2>Systems</h2>
+      <p>In large teams, a single screen design isn’t enough. Products need patterns, components, and rules that scale across multiple squads and platforms. With Figma, I’ve:</p>
+      <ul>
+        <li>Built and maintained component libraries that speed up design work.</li>
+        <li>Defined tokens for colors, typography, and spacing to ensure consistency.</li>
+        <li>Documented usage rules so developers and designers can work seamlessly together.</li>
+      </ul>
+
+      <figure class="card frame reveal" aria-describedby="cap-sys">
+        <img src="Systems.JPG" alt="Figma sliders and range sliders components demonstrating rules and focus areas" />
+        <figcaption id="cap-sys">I love my components nice and clean – When creating components I often annotate in order to remember where to put focus on.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>My focus:</h2>
+      <p>My focus</p>
+      <ul>
+        <li>Creating core libraries of buttons, inputs, forms, and navigation elements.</li>
+        <li>Setting up variables and properties that make systems scalable and flexible.</li>
+        <li>Documenting component usage so teams can move faster and more consistently.</li>
+        <li>Exploring motion prototypes directly inside Figma for richer experiences.</li>
+      </ul>
+
+      <div class="note reveal" aria-label="reflection">
+        I’ll admit it: I geek out over clean components and neat documentation. But it’s not about perfectionism — it’s about creating a shared language for teams. Design systems turn design from a series of isolated screens into a cohesive ecosystem, and that’s what makes them powerful.
+      </div>
+    </section>
+  </main>
+
+  <section class="certs" aria-labelledby="s-certs">
+    <div class="wrap">
+      <h2 id="s-certs">Certifications</h2>
+      <div class="cert-grid">
+        <article class="cert reveal" aria-label="Figma Design Advanced">
+          <h4>Figma Design Advanced</h4>
+          <small>Daniel Walter Scott</small>
+          <a href="#" aria-label="View credential: Figma Design Advanced">View credential →</a>
+        </article>
+
+        <article class="cert reveal" aria-label="Complete Web & Mobile Designer">
+          <h4>Complete Web &amp; Mobile Designer</h4>
+          <small>ZTM</small>
+          <a href="#" aria-label="View credential: Complete Web & Mobile Designer">View credential →</a>
+        </article>
+
+        <article class="cert reveal" aria-label="—">
+          <h4>More learning</h4>
+          <small>Always expanding the toolkit</small>
+          <a href="#">View credential →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-wrap" role="complementary" aria-label="Next story">
+    <h2 style="margin:0 0 10px 4px">Want to read more stories?</h2>
+    <a class="cta" href="Story_8.html">Expressing through code</a>
+  </div>
+
+  <footer class="site-footer" role="contentinfo"><div class="wrap"></div></footer>
+
+  <!-- Floating emergency button -->
+  <a href="Homepage.html" class="back-home" id="backHome" aria-label="Go back to homepage">
+    <span class="icon" aria-hidden="true"></span><span class="label">Tired of reading?</span>
+  </a>
+
+  <script>
+    // progress
+    (function(){
+      const bar = document.getElementById('progressBar');
+      function update(){
+        const d=document.documentElement, s=d.scrollTop||document.body.scrollTop;
+        const m=(d.scrollHeight - innerHeight) || 1;
+        bar.style.width = Math.min(100, Math.max(0, (s/m)*100)) + '%';
+      }
+      addEventListener('scroll', update, {passive:true});
+      addEventListener('resize', update); update();
+    })();
+
+    // show emergency btn after halfway
+    (function(){
+      const btn = document.getElementById('backHome');
+      function onScroll(){
+        const half=(document.documentElement.scrollHeight - innerHeight)/2;
+        if(scrollY>half) btn.classList.add('visible'); else btn.classList.remove('visible');
+      }
+      addEventListener('scroll', onScroll, {passive:true}); onScroll();
+    })();
+
+    // reveal
+    (function(){
+      const els = document.querySelectorAll('.frame, .cert, .note');
+      els.forEach(el => el.classList.add('reveal'));
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+      },{threshold:0.14});
+      els.forEach(el=>io.observe(el));
+    })();
+  </script>
+</body>
+</html>
+

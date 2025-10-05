@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Expressing through code &lt;&gt; and Ai — Angeliki Vlastari</title>
+
+    <!-- Favicon / logo -->
+    <link rel="icon" href="AV.svg" type="image/svg+xml"><link rel="alternate icon" href="Photo.png" type="image/png">
+    
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ========= Tokens (same as Story_base) ========= */
+    :root{
+      --bg:#ffffff; --surface:#ffffff; --surface-soft:#F6F8FA;
+      --ink:#101418; --ink-2:#4A5562; --line:#E6EAEE;
+      --brand:#148F8B; --brand-tint:#EAF9F9; --chip:#DDF4F4;
+      --coral:#FF6F61; --wrap:1080px;
+      --radius:16px; --radius-sm:12px;
+      --shadow:0 8px 24px rgba(16,20,24,.06);
+     --gradient-surface:linear-gradient(180deg, var(--brand-tint) 0%, #ffffff 32%);
+     --shadow-lg:0 24px 60px rgba(16,20,24,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Montserrat,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink);background:var(--bg);line-height:1.7}
+    img{max-width:100%;display:block;height:auto}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    a:focus-visible{outline:3px solid var(--brand);outline-offset:3px;border-radius:8px}
+    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+
+    h1{font-size:clamp(28px,4.4vw,40px);line-height:1.2;margin:.35rem 0 .25rem}
+    h2{font-size:clamp(18px,2.2vw,22px);margin:24px 0 8px}
+
+    /* Progress & skip */
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{position:fixed;left:16px;top:16px;width:auto;height:auto;padding:.5rem .75rem;background:#083F3D;color:#fff;border-radius:8px;z-index:1001}
+    .progress{position:fixed;top:0;left:0;width:100%;height:4px;background:rgba(20,143,139,.12);z-index:1000}
+    .progress .bar{display:block;height:100%;width:0%;background:var(--brand);transition:width .15s linear}
+
+    /* Header area */
+    header.page{padding:56px 0 12px;background:linear-gradient(180deg,var(--brand-tint) 0%,#FFFFFF 70%)}
+    .hdr-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .home-link{display:inline-flex;align-items:center;color:var(--ink-2);font-weight:600;text-decoration:underline}
+    .home-link::before{content:"";display:inline-block;width:16px;height:16px;margin-right:6px;background:url('chevron-left.svg') center/contain no-repeat}
+    .meta{font-size:.88rem;color:var(--ink-2)}
+    .subtitle{color:var(--ink-2);margin:0 0 16px}
+
+    /* Tags */
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 20px}
+    .chip{display:inline-flex;align-items:center;padding:6px 12px;background:var(--chip);border:1px solid var(--line);border-radius:999px;color:#0B4F4F;font-size:.82rem;font-weight:600}
+
+    /* Note card */
+    .note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;color:var(--ink-2)}
+
+    /* Certifications section */
+    .certs{background:var(--brand-tint);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 0}
+    .cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .cert{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:150px;display:flex;flex-direction:column;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+    .cert h4{margin:0 0 2px;font-size:.95rem}
+    .cert small{display:block;color:var(--ink-2)}
+    .cert a{display:inline-block;margin-top:auto;font-weight:600}
+    .cert:hover,.cert:focus-within{transform:translateY(-4px);border-color:var(--brand);background:var(--brand-tint)}
+    @media (max-width:680px){.cert-grid{grid-template-columns:1fr}}
+
+    /* CTA */
+    .cta-wrap{max-width:var(--wrap);margin:60px auto 110px;padding:0 24px}
+    .cta{display:block;margin-top:12px;padding:24px;border-radius:16px;background:var(--brand);color:#fff;text-align:center;font-weight:700;letter-spacing:.2px;box-shadow:var(--shadow)}
+    .cta:hover{text-decoration:none;filter:saturate(1.06)}
+
+    /* Floating emergency button */
+    .back-home{position:fixed;right:20px;bottom:20px;padding:.85rem 1.15rem;border-radius:9999px;background:var(--coral);color:#fff;border:none;box-shadow:0 10px 24px rgba(255,111,97,.35);font-weight:700;text-decoration:none;opacity:0;transform:translateY(16px);transition:opacity .2s ease,transform .2s ease,filter .2s ease;z-index:999;display:inline-flex;align-items:center;gap:.6rem}
+    .back-home .icon{width:18px;height:18px;background:url('house-fill.svg') center/contain no-repeat}
+    .back-home .label{font-size:.95rem}
+    .back-home.visible{opacity:1;transform:translateY(0)}
+    .back-home:hover{filter:brightness(1.07) saturate(1.05)}
+    @media (max-width:600px){.back-home{padding:0;width:48px;height:48px;display:grid;place-items:center}.back-home .label{display:none}.back-home .icon{width:22px;height:22px}}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(14px)}
+    .reveal.in{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  
+@media (prefers-reduced-motion: reduce){
+  .progress{ position: static; height: 0; }
+  .tag, .cta, .cert{ transition: none; }
+}
+
+</style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span class="bar" id="progressBar"></span></div>
+
+  <header class="page" role="banner">
+    <div class="wrap">
+      <nav class="hdr-nav" aria-label="Breadcrumb">
+        <a href="Homepage.html" class="home-link" aria-label="Back to homepage">Home</a>
+      </nav>
+
+      <div class="meta">⏱️ <span>3 min read</span></div>
+      <h1>Expressing through code &lt;&gt; and Ai</h1>
+      <p class="subtitle">Help with subtitle</p>
+
+      <div class="chips" aria-label="tags">
+        <span class="chip">UI Design</span>
+        <span class="chip">Front-end</span>
+        <span class="chip">Creativity</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="wrap" role="main">
+    <section>
+      <h2>Figma is my playground and my workshop</h2>
+      <p>If you’ve read all my stories so far — which is impressive, I’m honestly shocked — you’ve probably already noticed my view on design having no boundaries.</p>
+      <p>For me, <a href="#" aria-label="design is creation itself">design is creation itself</a>, expressed in different ways: through visuals, structures, experiences, and sometimes… through code and artificial intelligence.</p>
+    </section>
+
+    <section>
+      <h2>Does a designer need to code?</h2>
+      <p>Learning the basics of HTML, CSS, JS and Python completely changed the way I design.<br/>It helped me:</p>
+      <ul>
+        <li>Prototype interactions more realistically.</li>
+        <li>Understand technical constraints and collaborate better with developers.</li>
+        <li>Visualize and process data using tools like Python + Power BI to make design decisions data-driven.</li>
+      </ul>
+      <p>Coding has given me new creative superpower — it’s like learning another language that allows me to speak with both designers and developers fluently.</p>
+    </section>
+
+    <section>
+      <h2>Where AI fits in</h2>
+      <p>AI isn’t just hype — it’s already shaping how we create.<br/>I use AI tools to:</p>
+      <ul>
+        <li>Speed up idea generation and test multiple variations.</li>
+        <li>Create perfect copyright for my UX personas.</li>
+        <li>Automate small, repetitive tasks so I can focus more on creativity and strategy.</li>
+      </ul>
+      <p>Experimenting with AI has helped me design chatbots more naturally (like the one from Story 6) and even reimagine how search and interaction might evolve in the future.</p>
+      <p>And yes — part of this web portfolio was comade with the help of ChatGPT, which has become my favorite co-pilot in testing prompts, structuring design thinking workshops, or finding new angles for storytelling!</p>
+
+      <div class="note reveal" aria-label="ChatGPT comment">
+        What chatGPT thinks of me: <strong>Perfect 💡</strong> — that story is so you: warm, witty, and self-aware, while wrapping up the portfolio on a reflective note. It shows confidence, humility, and curiosity — exactly the kind of designer personality PIX will love.
+      </div>
+    </section>
+  </main>
+
+  <section class="certs" aria-labelledby="s-certs">
+    <div class="wrap">
+      <h2 id="s-certs">Certifications WIP</h2>
+      <div class="cert-grid">
+        <article class="cert reveal" aria-label="AI Fundamentals">
+          <h4>AI Fundamentals</h4>
+          <small>I have somthing here</small>
+          <a href="#">View credential →</a>
+        </article>
+
+        <article class="cert reveal" aria-label="Python related">
+          <h4>Python related</h4>
+          <small>Needs work</small>
+          <a href="#">View credential →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-wrap" role="complementary" aria-label="Next story">
+    <h2 style="margin:0 0 10px 4px">Want to read more stories?</h2>
+    <a class="cta" href="Story_7.html">Figma is my friend</a>
+  </div>
+
+  <!-- Emergency button -->
+  <a href="Homepage.html#contact" class="back-home" id="backHome" aria-label="Go back to homepage">
+    <span class="icon" aria-hidden="true"></span><span class="label">Tired of reading?</span>
+  </a>
+
+  <script>
+    // Progress bar
+    (function(){
+      const bar=document.getElementById('progressBar');
+      function update(){
+        const d=document.documentElement, s=d.scrollTop||document.body.scrollTop;
+        const m=(d.scrollHeight - innerHeight) || 1;
+        bar.style.width = Math.min(100, Math.max(0,(s/m)*100)) + '%';
+      }
+      addEventListener('scroll',update,{passive:true});
+      addEventListener('resize',update);
+      update();
+    })();
+
+    // Show emergency button after half page
+    (function(){
+      const btn=document.getElementById('backHome');
+      function onScroll(){
+        const half=(document.documentElement.scrollHeight - innerHeight)/2;
+        if(scrollY>half) btn.classList.add('visible'); else btn.classList.remove('visible');
+      }
+      addEventListener('scroll',onScroll,{passive:true});
+      onScroll();
+    })();
+
+    // Reveal on view
+    (function(){
+      const els=document.querySelectorAll('.note, .cert');
+      els.forEach(el=>el.classList.add('reveal'));
+      const io=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+      },{threshold:0.14});
+      els.forEach(el=>io.observe(el));
+    })();
+  </script>
+</body>
+</html>
