@@ -131,9 +131,20 @@
     .cert h4{margin:0 0 2px; font-size:.95rem}
     .cert small{display:block; color:var(--ink-2)}
     .cert a{display:inline-block; margin-top:auto; font-weight:600}
-    .cert:hover, .cert:focus-within{transform:translateY(-4px); border-color:white; background:var(--brand-tint)}
+    .cert:hover, .cert:focus-within{transform:translateY(-4px);}
     @media (max-width:900px){ .cert-grid{grid-template-columns:repeat(2,1fr)} }
     @media (max-width:560px){ .cert-grid{grid-template-columns:1fr} }
+
+.education {
+    background: #ddf4f4;
+    color: #000;
+    margin-top: 64px;
+    padding: 46px 0 58px;
+}
+
+    .education .shell {
+    max-width: 920px;
+}
     
     /* ===== STORIES GRID ===== */
     h2.section-title{ margin:40px 0 24px; font-size:22px }
@@ -507,7 +518,7 @@
     </div>
   </main>
 
-    <section class="contact" aria-labelledby="s-certs">
+    <section class="education" aria-labelledby="s-certs">
     <div class="shell">
       <h2 id="s-certs">Education</h2>
       <div class="cert-grid">
@@ -535,7 +546,7 @@
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM8 8h4.8v2.2h.07C13.64 8.9 15.46 8 17.7 8 22.44 8 24 10.9 24 15.44V24h-5v-7.6c0-1.8-.03-4.12-2.5-4.12-2.5 0-2.88 1.95-2.88 4v7.72H8V8z"/></svg>
           Find me on LinkedIn
         </a>
-        <a class="btn" href="assets/Angeliki_Vlastari_CV/pdf" target="_blank" rel="noopener" aria-label="Download my Cv">
+        <a class="btn" href="assets/Angeliki_Vlastari_CV.pdf" target="_blank" rel="noopener" aria-label="Download my Cv">
           Download my CV
         </a>        
       </div>
@@ -543,6 +554,7 @@
   </section>
 </body>
 </html>
+
 
 
 
