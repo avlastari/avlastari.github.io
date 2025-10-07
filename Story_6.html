@@ -40,7 +40,7 @@
     .two-up{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     @media(max-width:860px){.two-up{grid-template-columns:1fr}}
 
-    .note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;color:var(--ink-2)}
+    .note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin:40px 0px; color:var(--ink-2);}
     .certs{background:#EAF9F9;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 0}
     .cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     .cert{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;min-height:170px;transition:transform .2s ease, background .2s ease, border-color .2s ease}
@@ -103,13 +103,25 @@
     <section>
       <h2>Case Study: inspiration from a voice message</h2>
       <p>Back in 2023, when I was working in the chatbot chapter, I had the chance to <strong>experiment with a concept design</strong> that went a step beyond everyday work. The idea was to create a new chatbot for our youth prepaid product — one of the most popular services among students — often acting as the “front door” to our core products.</p>
-      <p>We wanted something bold yet playful, a chatbot experience that matched the energy of its audience. That insight changed our direction: the chatbot could double as a search bar, indexing products and results while maintaining a conversational tone.</p>
+      <p>We wanted something bold but playful, a chatbot experience that matched the energy of its audience.
+One evening, while thinking about implementation, a friend sent me a voice message on my phone. 
+That sparked an idea:
+The IVR team was already using speech-to-text technology!
+What if the chatbot could leverage the same and give users the option to interact naturally — even through voice or short text?</p>
 
       <h3>Testing the hypothesis</h3>
-      <p>We quickly created a beta version and tested it with a small group of users. We observed that they weren’t “chatting” — they wanted quick, functional answers. That insight confirmed our direction.</p>
+      <p>We quickly created a beta version and tested it with a small group of users. What we saw was fascinating:
+This audience used both chatbot and IVR with single words or very short messages.
+They weren’t “chatting” — they wanted quick, functional answers.
+That insight changed our direction: the chatbot could double as a search bar, indexing products and results while maintaining a conversational tone.</p>
 
       <h3>Pushing the idea further</h3>
-      <p>What if the chatbot could serve as a search tool, yet become a social conversational app? We explored: enabling gifting and playful interactions, adding customization and gamification, and giving friends a reason to return.</p>
+      <p>
+Why stop there? If the chatbot could serve as a search tool, why not turn it into a social conversational app?
+We explored ideas like:
+Enabling gifting between users (already possible via SMS, now integrated in-app).
+Allowing friends to communicate through the chatbot — giving them a reason to return.
+Adding customization and gamification to make the interaction fun and personal.</p>
 
       <div class="two-up">
         <figure class="card" aria-label="Welcome flow">
@@ -122,6 +134,7 @@
 
       <figure class="card" aria-label="Interaction scenarios">
         <img src="assets/images/chatbot-conversations.webp" alt="Comparing SMS with in‑app conversational experience and friend interactions" />
+        Designed as a playful experiment, this version allowed users to interact with friends through the chatbot — exchanging short messages and gifts to make digital communication more personal.
       </figure>
 
       <div class="note">Although the full proposal was too ambitious to implement at once, it received great internal feedback. Some ideas — like short-text interaction patterns and integrated product search — were later incorporated into the production roadmap.
