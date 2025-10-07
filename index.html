@@ -124,6 +124,17 @@
     .hero-title{ font-size:28px; font-weight:700; line-height:1.05 }
     .hero-sub{ margin-top:6px; font-size:14px; line-height:1.6 }
 
+    /* Certifications */
+    .certs{background:#EAF9F9; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:36px 0}
+    .cert-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .cert{background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; min-height:170px; transition:transform .2s ease, background .2s ease, border-color .2s ease}
+    .cert h4{margin:0 0 2px; font-size:.95rem}
+    .cert small{display:block; color:var(--ink-2)}
+    .cert a{display:inline-block; margin-top:auto; font-weight:600}
+    .cert:hover, .cert:focus-within{transform:translateY(-4px); border-color:var(--brand); background:var(--brand-tint)}
+    @media (max-width:900px){ .cert-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:560px){ .cert-grid{grid-template-columns:1fr} }
+    
     /* ===== STORIES GRID ===== */
     h2.section-title{ margin:40px 0 24px; font-size:22px }
     .grid{
@@ -496,6 +507,21 @@
     </div>
   </main>
 
+    <section class="certs" aria-labelledby="s-certs">
+    <div class="wrap">
+      <h2 id="s-certs">Education</h2>
+      <div class="cert-grid">
+        <article class="cert" aria-label="Cert 1">
+          <h4>Msc Informatics & Applications</h4>
+          <small>University of West Attica</small>
+        </article>
+        <article class="cert" aria-label="Cert 2">
+          <h4>BA Interior Architecture & Design</h4>
+          <small>Technological Institute of Athens</small>
+        </article>
+      </div>
+    </div>
+  </section>
   <!-- ===== CONTACT ===== -->
   <section id="contact" class="contact" aria-label="Contact section" tabindex="-1">
     <div class="shell">
@@ -509,11 +535,16 @@
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM8 8h4.8v2.2h.07C13.64 8.9 15.46 8 17.7 8 22.44 8 24 10.9 24 15.44V24h-5v-7.6c0-1.8-.03-4.12-2.5-4.12-2.5 0-2.88 1.95-2.88 4v7.72H8V8z"/></svg>
           Find me on LinkedIn
         </a>
+        <a class="btn" href="assets/Angeliki_Vlastari_CV/pdf" target="_blank" rel="noopener" aria-label="Download my Cv">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM8 8h4.8v2.2h.07C13.64 8.9 15.46 8 17.7 8 22.44 8 24 10.9 24 15.44V24h-5v-7.6c0-1.8-.03-4.12-2.5-4.12-2.5 0-2.88 1.95-2.88 4v7.72H8V8z"/></svg>
+          Download my CV
+        </a>        
       </div>
     </div>
   </section>
 </body>
 </html>
+
 
 
 
