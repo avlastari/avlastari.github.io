@@ -47,12 +47,21 @@
     .meta{font-size:.88rem;color:var(--ink-2)}
     .subtitle{color:var(--ink-2);margin:0 0 16px}
 
+    /* Insight grid (2 rows × 4 cols on desktop) */
+    .insight-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px}
+    .insight{background:var(--chip); border:1px solid var(--line); border-radius:12px; padding:12px; transition:transform .2s ease, background .2s ease, border-color .2s ease}
+    .insight b{display:block; font-size:.9rem}
+    .insight small{color:var(--ink-2)}
+    .insight:hover, .insight:focus-within{transform:translateY(-3px); border-color:var(--brand); background:var(--brand-tint)}
+    @media (max-width: 980px){ .insight-grid{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width: 560px){ .insight-grid{grid-template-columns:repeat(2,1fr)} }
+    
     /* Tags */
     .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 20px}
     .chip{display:inline-flex;align-items:center;padding:6px 12px;background:var(--chip);border:1px solid var(--line);border-radius:999px;color:#0B4F4F;font-size:.82rem;font-weight:600}
 
     /* Note card */
-    .note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;color:var(--ink-2)}
+    .note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px; margin:40px 0px;color:var(--ink-2);}
 
     /* Certifications section */
     .certs{background:var(--brand-tint);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 0}
@@ -116,7 +125,7 @@
     <section>
       <h2>Figma is my playground and my workshop</h2>
       <p>If you’ve read all my stories so far — which is impressive, I’m honestly shocked — you’ve probably already noticed my view on design having no boundaries.</p>
-      <p>For me, <a href="#" aria-label="design is creation itself">design is creation itself</a>, expressed in different ways: through visuals, structures, experiences, and sometimes… through code and artificial intelligence.</p>
+      <p>For me, <strong> design is creation itself</strong>, expressed in different ways: through visuals, structures, experiences, and sometimes… through code and artificial intelligence.</p>
     </section>
 
     <section>
@@ -129,7 +138,17 @@
       </ul>
       <p>Coding has given me new creative superpower — it’s like learning another language that allows me to speak with both designers and developers fluently.</p>
     </section>
-
+    <section>
+      <h2>How do I monitor Customer Insights?</h2>
+      <div class="insight-grid" role="list">
+        <div class="insight" role="listitem"><b>HTML5</b><small>Structuring</small></div>
+        <div class="insight" role="listitem"><b>CSS</b><small>Styling</small></div>
+        <div class="insight" role="listitem"><b>Javascript</b><small>Interaction</small></div>
+        <div class="insight" role="listitem"><b>Python</b><small>Data Handling</small></div>
+        <div class="insight" role="listitem"><b>Bower BI</b><small>Data visualization</small></div>
+        <div class="insight" role="listitem"><b>SQL</b><small>for queries</small></div>
+      </div>
+    </section>
     <section>
       <h2>Where AI fits in</h2>
       <p>AI isn’t just hype — it’s already shaping how we create.<br/>I use AI tools to:</p>
