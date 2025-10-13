@@ -66,11 +66,11 @@
     /* Certifications section */
     .certs{background:var(--brand-tint);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 0}
     .cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .cert{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:150px;display:flex;flex-direction:column;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+    .cert{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:120px;display:flex;flex-direction:column;transition:transform .2s ease,background .2s ease,border-color .2s ease}
     .cert h4{margin:0 0 2px;font-size:.95rem}
     .cert small{display:block;color:var(--ink-2)}
-    .cert a{display:inline-block;margin-top:auto;font-weight:600}
-    .cert:hover,.cert:focus-within{transform:translateY(-4px);border-color:var(--brand);background:var(--brand-tint)}
+    .cert a{display:none;margin-top:auto;font-weight:600}
+    /*.cert:hover,*/.cert:focus-within{transform:translateY(-4px);border-color:var(--brand);background:var(--brand-tint)}
     @media (max-width:680px){.cert-grid{grid-template-columns:1fr}}
 
     /* CTA */
@@ -171,8 +171,8 @@
       <h2 id="s-certs">Certifications WIP</h2>
       <div class="cert-grid">
         <article class="cert reveal" aria-label="AI Fundamentals">
-          <h4>AI Fundamentals</h4>
-          <small>I have somthing here</small>
+          <h4>Fundamentals on AI & ML</h4>
+          <small>Percipio</small>
           <a href="#">View credential →</a>
         </article>
 
